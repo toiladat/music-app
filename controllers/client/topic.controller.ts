@@ -8,5 +8,7 @@ export const index =async(req:Request,res:Response)=>{
     });
     console.log(topics);
     
-    res.render('client/page/topics/index.pug') 
+    res.render('client/page/topics/index.pug',{
+      pageTitle:"Topics"
+    }) 
   }
