@@ -5,10 +5,9 @@ import { Express,Request,Response } from "express";
 export const index =async(req:Request,res:Response)=>{
     const topics=await Topic.find({
       deleted:false
-    });
-    console.log(topics);
-    
+    });    
     res.render('client/page/topics/index.pug',{
-      pageTitle:"Topics"
+      pageTitle:"Topics",
+      topics:topics
     }) 
   }

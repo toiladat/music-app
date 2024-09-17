@@ -1,0 +1,32 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .container.my-3
+    .row
+      .col-12
+        +box-head(pageTitle)
+
+    if(songs.length > 0)
+      .row
+        each item in songs
+          .col-6.mb-3
+            div(class="song-item")
+              div(class="inner-image")
+                a(href=`/songs/detail/${item.slug}`)
+                  img(src=item.avatar)
+              div(class="inner-content")
+                div(class="inner-title")
+                  a(href=`/songs/detail/${item.slug}`) #{item.title}
+                div(class="inner-singer")
+                  <i class="fa-solid fa-microphone-lines mr-1"></i>
+                  | #{item.singerFullName}
+                div(class="inner-like") 
+                  <i class="fa-solid fa-thumbs-up mr-1"></i>
+                  | #{item.like}
+                div(class="inner-time")
+                  <i class="fa-regular fa-clock mr-1"></i>
+                  | 10/10/2024
+    else
+      p
+        i Không có bài hát nào.
