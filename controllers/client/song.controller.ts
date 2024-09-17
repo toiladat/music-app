@@ -39,3 +39,39 @@ export const index =async(req:Request,res:Response)=>{
   res.send('Not Found')
  }
 }
+//[GET]/songs/detail/:slugSong
+export const detail=async(req:Request,res:Response)=>{
+try{
+  const slugSong=req.params.slugSong
+  // lấy thông tin song  
+const song=await Song.findOne({
+  slug:slugSong,
+  status:'active',
+  deleted:false
+})
+
+  // lấy thông tin singer 
+const singer=await Singer.findOne({
+  _id:song.singerId,
+  status:"active",
+  deleted:false
+}).select("fullName")
+
+  // lấy thông tin topic
+const topic=await Topic.findOne({
+  _id:song.topicId,
+  deleted:false,
+  status:'active'
+}).select('title')
+
+res.render('client/page/songs/detail.pug',{
+  pageTitle:"Chi tiết bài hát",
+  song:song,
+  topic:topic,
+  singer:singer
+})
+}
+catch{
+  res.send("Có lỗi xảy ra")
+}
+}

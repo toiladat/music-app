@@ -1,0 +1,254 @@
+/* Header */
+.header {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+.header .inner-logo a{
+  overflow: hidden;
+  border-radius: 50px;
+
+}
+.header .inner-logo img {
+  max-height: 50px;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.header .inner-menu > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+	flex-wrap: wrap;
+}
+
+.header .inner-menu > ul > li {
+  margin-left: 20px;
+}
+/* End Header */
+
+/* Footer */
+.footer {
+  background: #333;
+  color: #fff;
+  text-align: center;
+  padding: 14px;
+  font-weight: 700;
+}
+/* End Footer */
+
+/* box-head */
+.box-head {
+  margin-bottom: 30px;
+}
+
+.box-head .inner-title {
+  margin-bottom: 0;
+  font-size: 28px;
+  font-weight: 600;
+  color: green;
+}
+/* End box-head */
+
+
+/* song-item */
+.song-item {
+  display: flex;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.song-item .inner-image {
+  width: 115px;
+  aspect-ratio: 1/1;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.song-item .inner-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.song-item .inner-content {
+  padding: 10px;
+  flex: 1;
+}
+
+.song-item .inner-content .inner-title {
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient:vertical;
+  display: -webkit-box;
+  margin-bottom: 5px;
+}
+
+.song-item .inner-content .inner-title a {
+  font-size: 14px;
+  font-weight: 700;
+  color: #4d007d;
+}
+
+.song-item .inner-content .inner-title a:hover {
+  color: #7c00c8;
+  text-decoration: none;
+}
+
+.song-item .inner-content .inner-singer {
+  font-size: 13px;
+  font-weight: 500;
+  color: #282828;
+  margin-bottom: 2px;
+}
+
+.song-item .inner-content .inner-like {
+  font-size: 13px;
+  font-weight: 500;
+  color: #004cd0;
+  margin-bottom: 2px;
+}
+
+.song-item .inner-content .inner-time {
+  font-size: 13px;
+  font-weight: 500;
+  color: #585858;
+}
+/* End song-item */
+
+
+
+/* singer-detail */
+.singer-detail .inner-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #F57F20;
+}
+
+.singer-detail .inner-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.singer-detail .inner-actions .inner-action {
+  margin-right: 20px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  color: #646464;
+}
+
+.singer-detail .inner-actions .inner-action i {
+  font-size: 16px;
+  margin-right: 5px;
+}
+
+.singer-detail .inner-actions .inner-like {
+  cursor: pointer;
+}
+
+.singer-detail .inner-actions .inner-like i {
+  color: #0059ff;
+}
+
+.singer-detail .inner-actions .inner-heart {
+  cursor: pointer;
+}
+
+.singer-detail .inner-actions .inner-heart i {
+  color: #b90000;
+}
+
+.singer-detail .inner-play {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.singer-detail .inner-play .inner-audio {
+  flex: 1;
+}
+
+.singer-detail .inner-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid #F57F20;
+  margin-right: 20px;
+  animation-name: spin;
+  animation-duration: 12s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-play-state: paused;
+}
+ 
+.aplayer .aplayer-pic {
+  animation-name: spin;
+  animation-duration: 12s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  border-radius: 50%;
+  animation-play-state: paused;
+}
+
+.aplayer .aplayer-pic .aplayer-pause {
+  width: 26px;
+  height: 26px;
+  border: 2px solid #fff;
+  bottom: 50%;
+  right: 50%;
+  margin: 0 -15px -15px 0;
+}
+
+.aplayer .aplayer-pic .aplayer-pause svg {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  height: 20px;
+  width: 20px;
+}
+
+@keyframes spin {
+  from {
+    transform:rotate(0deg);
+  }
+  to {
+    transform:rotate(360deg);
+  }
+}
+
+.singer-detail .inner-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.singer-detail .inner-desc {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.singer-detail .inner-desc .inner-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: #F57F20;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.singer-detail .inner-desc .inner-text {
+  font-size: 14px;
+  padding: 10px 15px;
+}
+/* End singer-detail */

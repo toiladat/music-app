@@ -1,0 +1,4 @@
+ // lib aplayer : dung trong chi tiet bai hat ben client
+  https://aplayer.js.org/#/
+ // pause keyframes
+  https://css-tricks.com/how-to-play-and-pause-css-animations-with-css-custom-properties/
