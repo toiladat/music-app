@@ -75,9 +75,10 @@ export const detail = async (req: Request, res: Response) => {
     res.send("Có lỗi xảy ra")
   }
 }
-//[PATHC]/songs/like
+//[PATCH]/songs/like
 export const like = async (req: Request, res: Response) => {
 try{
+    
   const { id, type } = req.body
   //o trang detail phai lay tu csdl ra xem like co activ khong 
   //1 ktra xem  trong likedSongList cua user co idSong
@@ -112,4 +113,20 @@ catch{
     code:400
   })
 }
+}
+//[PATCH]/songs/favorite
+export const favorite = async (req:Request,res:Response)=>{
+  try{
+        
+    res.json({
+      code:200,
+      message:"iu iu iu"
+    })
+  }
+  catch{
+    res.json({
+      code:400,
+      message:"Có lỗi xảy ra.."
+    })
+  }
 }

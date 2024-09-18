@@ -9,7 +9,15 @@ header.header
       .col-9
         .inner-menu
           ul
+            if(user)
+              li #{user.fullName}
             li
               a(href="/") Trang chủ
             li
               a(href="/topics") Chủ đề
+            if(!user)
+              li
+                a(href="/user/login") Đăng nhập
+            else 
+              li 
+                a(href='/user/logout') Đăng xuất

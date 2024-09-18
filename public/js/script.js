@@ -68,8 +68,48 @@ if(buttonLike){
           const innerNumber=buttonLike.querySelector('.inner-like span')
           innerNumber.innerHTML=data.updateLike
         }
+        else{
+          window.location.href='/user/login'
+        }
       })
   })
 }
 
 //End Like
+
+//Favorite
+const innerHeart=document.querySelector('.inner-heart')
+if(innerHeart){
+  innerHeart.addEventListener('click',()=>{
+    const idSong=innerHeart.getAttribute('button-favorite')
+    fetch('/songs/favorite',{
+      method:'PATCH',
+      headers:{
+        "Content-type":'application/json'
+      },
+      body:JSON.stringify(
+        {
+          idSong:idSong
+        }
+      )
+    })
+    .then(res=>res.json())
+    .then(data=>{
+      if(data.code==200){
+        console.log(data);
+      }
+    })
+  })
+}
+//End favorite
+
+
+// show alert
+const showAlert = document.querySelector('[show-alert]')
+if (showAlert) {
+  const time = parseInt(showAlert.getAttribute('show-alert')) || 3000
+  setTimeout(() => {
+    showAlert.classList.add('hidden')
+  }, time);
+}
+// end show alert
