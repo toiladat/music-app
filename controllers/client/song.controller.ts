@@ -68,8 +68,8 @@ export const detail = async (req: Request, res: Response) => {
     }).select('title')
     //ktra có like bài đó không
     const status = {
-      like:'',
-      favorite:''
+      like: '',
+      favorite: ''
     }
     const likedSong = await User.findOne({
       _id: user._id,
@@ -80,12 +80,12 @@ export const detail = async (req: Request, res: Response) => {
       status['like'] = 'active'
     }
     //ktra co trong favorite khong
-    const favoriteSong=await FavoriteSong.findOne({
-      userId:user._id,
-      songList:song.id
+    const favoriteSong = await FavoriteSong.findOne({
+      userId: user._id,
+      songList: song.id
     })
-    if(favoriteSong){
-      status['favorite']='active'
+    if (favoriteSong) {
+      status['favorite'] = 'active'
     }
     res.render('client/page/songs/detail.pug', {
       pageTitle: "Chi tiết bài hát",
@@ -173,44 +173,44 @@ export const like = async (req: Request, res: Response) => {
   }
 }
 //[PATCH]/songs/favorite
-export const favorite = async (req: Request, res: Response) => {
+export const favoritePatch = async (req: Request, res: Response) => {
   try {
     const id = req.body.id
     const user = res.locals.user
     //ktra existSongInList
     const existSongInList = await FavoriteSong.findOne({
-      userId:user._id,
-      songList:id
-    })    
-    let status=''
+      userId: user._id,
+      songList: id
+    })
+    let status = ''
     //unFavorite
-    if(existSongInList){
+    if (existSongInList) {
       await FavoriteSong.updateOne({
-        userId:user._id
-      },{
-        $pull:{
-          songList:id
+        userId: user._id
+      }, {
+        $pull: {
+          songList: id
         }
       })
-      status='unFavorite'
+      status = 'unFavorite'
     }
     //favorite
-    else{
+    else {
       await FavoriteSong.updateOne({
-        userId:user._id
-      },{
-        $push:{
-          songList:id
+        userId: user._id
+      }, {
+        $push: {
+          songList: id
         }
       })
-      status='favorite'
+      status = 'favorite'
     }
 
 
     res.json({
       code: 200,
       message: "iu iu iu",
-      status:status
+      status: status
     })
   }
   catch {
@@ -218,5 +218,43 @@ export const favorite = async (req: Request, res: Response) => {
       code: 400,
       message: "Có lỗi xảy ra..",
     })
+  }
+}
+//[GET]/songs/favorite
+export const favorite = async (req: Request, res: Response) => {
+  try {
+    const user = res.locals.user
+    const songs = []
+    const result = await FavoriteSong.findOne({
+      userId: user._id
+    })
+    const ids = result.songList
+
+    for (const id of ids) {
+      const inforSong = await Song.findOne({
+        _id: id
+      }).select('title avatar singerId  slug')
+
+      const inforSinger = await Singer.findOne({
+        _id: inforSong.singerId
+      }).select('fullName')
+
+      const song = {
+        infoSong: inforSong,
+        infoSinger: inforSinger
+      }
+      songs.push(song)
+
+    }
+
+
+
+    res.render('client/page/songs/favorite', {
+      pageTitle: 'Bài hát yêu thích',
+      songs: songs
+    })
+  }
+  catch {
+    res.redirect('back')
   }
 }

@@ -73,32 +73,35 @@ if (buttonLike) {
 //End Like
 
 //Favorite
-const innerHeart = document.querySelector('.inner-heart')
-if (innerHeart) {
-  innerHeart.addEventListener('click', () => {
-    const id = innerHeart.getAttribute('button-favorite')
-    fetch('/songs/favorite', {
-        method: 'PATCH',
-        headers: {
-          "Content-type": 'application/json'
-        },
-        body: JSON.stringify({
-          id: id
+const ListinnerHeart = document.querySelectorAll('[button-favorite]')
+if (ListinnerHeart.length > 0) {
+  ListinnerHeart.forEach(innerHeart => {
+    innerHeart.addEventListener('click', () => {
+      const id = innerHeart.getAttribute('button-favorite')
+      fetch('/songs/favorite', {
+          method: 'PATCH',
+          headers: {
+            "Content-type": 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
         })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.code == 200) {
-          if (data.status == 'unFavorite') {
-            innerHeart.classList.remove('active')
+        .then(res => res.json())
+        .then(data => {
+          if (data.code == 200) {
+            if (data.status == 'unFavorite') {
+              innerHeart.classList.remove('active')
+            } else {
+              innerHeart.classList.add('active')
+            }
           } else {
-            innerHeart.classList.add('active')
+            window.location.href = '/user/login'
           }
-        } else {
-          window.location.href = '/user/login'
-        }
-      })
+        })
+    })
   })
+
 }
 //End favorite
 

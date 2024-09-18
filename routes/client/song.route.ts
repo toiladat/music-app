@@ -13,5 +13,10 @@ route.patch('/like',
 
 route.patch('/favorite',
   requireAuth,
-  controller.favorite)
+  controller.favoritePatch)
+
+route.get('/favorite',
+  requireAuth,
+  controller.favorite
+)
 export const songRoute=route
