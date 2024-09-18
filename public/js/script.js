@@ -87,7 +87,11 @@ if(buttonLike){
 const innerHeart=document.querySelector('.inner-heart')
 if(innerHeart){
   innerHeart.addEventListener('click',()=>{
-    const idSong=innerHeart.getAttribute('button-favorite')
+    const id=innerHeart.getAttribute('button-favorite')
+    const data={
+      id:id
+    }
+
     fetch('/songs/favorite',{
       method:'PATCH',
       headers:{

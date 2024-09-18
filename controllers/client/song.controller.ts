@@ -44,6 +44,7 @@ export const index = async (req: Request, res: Response) => {
 export const detail = async (req: Request, res: Response) => {
   try {
     const slugSong = req.params.slugSong
+    const user=res.locals.user
     // lấy thông tin song  
     const song = await Song.findOne({
       slug: slugSong,
@@ -64,12 +65,24 @@ export const detail = async (req: Request, res: Response) => {
       deleted: false,
       status: 'active'
     }).select('title')
-
+    //ktra có like bài đó không
+    let status=''
+    const likedSong=await User.findOne({
+      _id:user._id,
+      likedSongList:song.id
+    })
+    console.log(likedSong);
+    
+    if(likedSong){
+      status='active'
+    }
+    
     res.render('client/page/songs/detail.pug', {
       pageTitle: "Chi tiết bài hát",
       song: song,
       topic: topic,
-      singer: singer
+      singer: singer,
+      status:status
     })
   }
   catch {
