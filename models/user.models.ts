@@ -6,6 +6,10 @@ const userSchema=new mongoose.Schema({
   password:String,
   token:String,
   status:String,
+  likedSongList:{
+    type:Array,
+    default:[]
+  },
   deleted:{
     type:Boolean,
     default:false

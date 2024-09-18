@@ -31,7 +31,7 @@ if(aplayer){
 //Like|unLike
 // Mô tả làm lại phần like
 // làm login/register user( be se co thong tin user)
-// auth ( thì mới hiện like và fauvorite)
+// auth ( thì mới cho like và fauvorite)
 // hiển thị fauvorite song list, liked song list
 // model user là likedSongList:[] và fauvoriteSongList:[]
 // khi like hoặc add fouvorite chỉ cần gui id bai hat sang be lưu id bài hát
@@ -67,6 +67,12 @@ if(buttonLike){
         if(data.code==200){
           const innerNumber=buttonLike.querySelector('.inner-like span')
           innerNumber.innerHTML=data.updateLike
+          if(data.status=='unliked'){
+            buttonLike.classList.remove('active')
+          }
+          else{
+            buttonLike.classList.add('active')
+          }
         }
         else{
           window.location.href='/user/login'

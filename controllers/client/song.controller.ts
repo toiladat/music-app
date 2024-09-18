@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import Topic from "../../models/topics.models"
 import Song from "../../models/songs.model"
 import Singer from "../../models/singer.model"
+import User from "../../models/user.models"
 //[GET]/songs/:slugTopic
 export const index = async (req: Request, res: Response) => {
   try {
@@ -78,22 +79,55 @@ export const detail = async (req: Request, res: Response) => {
 //[PATCH]/songs/like
 export const like = async (req: Request, res: Response) => {
 try{
-    
+  const user=res.locals.user
+
   const { id, type } = req.body
-  //o trang detail phai lay tu csdl ra xem like co activ khong 
-  //1 ktra xem  trong likedSongList cua user co idSong
-
-  // like, thi add, unlike, remove
-
-  // +1|-1 likeNumber cua song
-
+  // lay infor bai hat
   const song = await Song.findOne({
     _id: id,
     status: 'active',
     deleted: false
   })
   const currentLike = song.like
-  const updateLike = type === 'like' ? currentLike + 1 : currentLike - 1;
+  let updateLike=0
+  let status=''
+  //o trang detail phai lay tu csdl ra xem like co activ khong 
+  //1 ktra xem  trong likedSongList cua user co idSong
+  const existSongInList=await User.findOne({
+    _id:user._id,
+    likedSongList:id
+  })
+  
+  //unlike
+  if(existSongInList){
+    await User.updateOne({
+      _id:user._id
+    },{
+      $pull:{
+        likedSongList:id
+      }
+    })
+    updateLike=currentLike - 1
+    status='unliked'
+  }
+  //like
+  else{
+    await User.updateOne({
+      _id:user._id
+    },{
+      $push:{
+        likedSongList:id
+      }
+    })
+    updateLike=currentLike + 1
+    status='liked'
+  }
+  // like, thi add, unlike, remove
+
+  // +1|-1 likeNumber cua song
+
+
+  
 
   await Song.updateOne({
     _id: id,
@@ -105,7 +139,8 @@ try{
   res.json({
     code: 200,
     message: "iu iu iu ",
-    updateLike:updateLike
+    updateLike:updateLike,
+    status:status
   })
 }
 catch{
