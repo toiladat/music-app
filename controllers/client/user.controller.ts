@@ -2,6 +2,7 @@ import  md5 from 'md5';
 import {generateRandomString} from "../../helper/generate.helper"
 import { Request,Response } from "express"
 import User from "../../models/user.models"
+import FavoriteSong from '../../models/favorite-song.models';
 
 //[GET]/user/login
 export const login=(req:Request,res:Response)=>{
@@ -72,7 +73,11 @@ export const registerPost=async (req,res:Response)=>{
   res.cookie('token', newUser.token, {
     expires: new Date(Date.now() + 8 * 3600000) // cookie will be removed after 8 hours
   })
-
+  //tao models favorite
+  const newFavorite= new FavoriteSong({
+    userId:newUser._id
+  })
+  await newFavorite.save()
   res.redirect('/topics')
 }
 
