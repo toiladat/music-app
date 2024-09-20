@@ -20,4 +20,5 @@ route.get('/favorite',
   controller.favorite
 )
 route.get('/search/:type',controller.search)
+route.patch('/listen',controller.listen)
 export const songRoute=route

@@ -17,13 +17,52 @@ if (aplayer) {
     }],
     autoplay: true
   });
+  // css đĩa quay nhạc pause hoặc running khi bài hát chạy
   const avatar = document.querySelector('.inner-avatar')
   ap.on('pause', () => {
     avatar.style.animationPlayState = 'paused'
   })
   ap.on('play', () => {
     avatar.style.animationPlayState = 'running'
+
+
+    const timeRequire = ap.audio.duration * 4 / 5 * 1000;
+
+    // tăng lượt nghe
+    setTimeout(() => {
+      // bên fe thì phải dùng _id
+      // set timeout nhưng khi chạy hết bài mới bắt đầu tăng lượt nghe
+      ap.on('ended', () => {
+        fetch(`/songs/listen`,{
+          method:'PATCH',
+          headers:{
+            "Content-Type": "application/json"
+          },
+          body:JSON.stringify({
+            id:dataSong._id
+          })
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.code == 200) {
+              const innerNumberListen = document.querySelector('.singer-detail .inner-listen .inner-number')
+              innerNumberListen.innerHTML = data.listen
+            }
+          })
+      })
+    }, timeRequire);
+
   })
+
+
+
+  // khi kết thúc tự động next sang bài hát cùng topics
+  // app.on('ended',()=>{
+  //   window.location=''
+  //   fetch()
+  // })
+
+
 }
 //End APlayer
 
@@ -127,7 +166,7 @@ if (boxSearch) {
       .then(res => res.json())
       .then(data => {
         if (data.code == 200) {
-      
+
           const htmlSong = data.songs.map(item => `
             <a class="inner-item" href="/songs/detail/${item.slug}">
               <div class="inner-image">
@@ -144,7 +183,7 @@ if (boxSearch) {
           const elementInnerSuggest = boxSearch.querySelector('.inner-suggest')
           const elementInnerList = elementInnerSuggest.querySelector('.inner-list')
           //htmlsóngs la 1 array
-        
+
           elementInnerList.innerHTML = htmlSong.join("");
           if (data.songs.length > 0) {
             elementInnerSuggest.classList.add("show");

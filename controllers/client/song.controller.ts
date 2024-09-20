@@ -333,3 +333,29 @@ export const search = async (req: Request, res: Response) => {
 
 
 }
+//[PATCH]/songs/listen
+export const listen=async (req:Request,res:Response)=>{
+try{
+  const id=req.body.id
+  const song=await Song.findOne({
+    _id:id
+  })
+  const updateNumber=song.listen+1
+  await Song.updateOne({
+    _id:id
+  },{
+    listen:updateNumber
+  })
+  console.log(id);
+  res.json({
+    code:200,
+    listen:updateNumber
+  })
+  
+}
+catch{
+  res.json({
+    code:400
+  })
+}
+}
