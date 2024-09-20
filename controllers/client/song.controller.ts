@@ -1,4 +1,5 @@
 import { Request, Response } from "express"
+import unidecode from "unidecode"
 import Topic from "../../models/topics.models"
 import Song from "../../models/songs.model"
 import Singer from "../../models/singer.model"
@@ -66,27 +67,31 @@ export const detail = async (req: Request, res: Response) => {
       deleted: false,
       status: 'active'
     }).select('title')
+
     //ktra có like bài đó không
     const status = {
       like: '',
       favorite: ''
     }
-    const likedSong = await User.findOne({
-      _id: user._id,
-      likedSongList: song.id
-    })
-
-    if (likedSong) {
-      status['like'] = 'active'
+    // neu co tai khoan
+    if (user) {
+      const likedSong = await User.findOne({
+        _id: user._id,
+        likedSongList: song._id
+      })
+      if (likedSong) {
+        status['like'] = 'active'
+      }
+      //ktra co trong favorite khong
+      const favoriteSong = await FavoriteSong.findOne({
+        userId: user._id,
+        songList: song.id
+      })
+      if (favoriteSong) {
+        status['favorite'] = 'active'
+      }
     }
-    //ktra co trong favorite khong
-    const favoriteSong = await FavoriteSong.findOne({
-      userId: user._id,
-      songList: song.id
-    })
-    if (favoriteSong) {
-      status['favorite'] = 'active'
-    }
+ 
     res.render('client/page/songs/detail.pug', {
       pageTitle: "Chi tiết bài hát",
       song: song,
@@ -257,4 +262,51 @@ export const favorite = async (req: Request, res: Response) => {
   catch {
     res.redirect('back')
   }
+}
+//[GET]/songs/search
+export const search = async (req: Request, res: Response) => {
+  let keyword = `${req.query.keyword}`.trim()
+  // replace space global
+  let keywordSlug=keyword.replace(/\s/g,"-")
+  // replace --- -> -
+  keywordSlug=keywordSlug.replace(/-+/g,'-').toLowerCase()
+  // bo dau
+  keywordSlug=unidecode(keywordSlug)
+
+  
+  const songs = []
+  const regexSlug=new RegExp(keywordSlug,'i')
+  const regex = new RegExp(keyword, 'i')
+
+  const listSong = await Song.find({
+    $or:[
+      {title:regex},
+      {slug:regexSlug}
+    ],
+    deleted: false,
+    status: 'active'
+  }).select('title avatar singerId like  slug')
+
+  for (const _song of listSong) {
+
+    const inforSinger = await Singer.findOne({
+      _id: _song.singerId
+    }).select('fullName')
+
+    const song = {
+      slug: _song.slug,
+      avatar: _song.avatar,
+      title: _song.title,
+      like: _song.like,
+      singerFullName: inforSinger.fullName
+    }
+    songs.push(song)    
+  }
+
+
+  res.render('client/page/songs/list.pug', {
+    pageTitle: `Bài hát yêu thích`,
+    keyword: keyword,
+    songs: songs
+  })
 }

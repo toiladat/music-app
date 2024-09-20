@@ -10,7 +10,7 @@ route.get('/detail/:slugSong',controller.detail)
 route.patch('/like',
   requireAuth,
   controller.like)
-
+ 
 route.patch('/favorite',
   requireAuth,
   controller.favoritePatch)
@@ -19,4 +19,5 @@ route.get('/favorite',
   requireAuth,
   controller.favorite
 )
+route.get('/search',controller.search)
 export const songRoute=route
