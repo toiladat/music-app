@@ -115,3 +115,45 @@ if (showAlert) {
   }, time);
 }
 // end show alert
+
+// Gợi ý tìm kiếm API
+const boxSearch = document.querySelector('.box-search')
+if (boxSearch) {
+  const inputSearch = boxSearch.querySelector("input[name='keyword']")
+  inputSearch.addEventListener('keyup', () => {
+    const keyword = inputSearch.value;
+    // /suggest la dynamic link
+    fetch(`/songs/search/suggest?keyword=${keyword}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.code == 200) {
+      
+          const htmlSong = data.songs.map(item => `
+            <a class="inner-item" href="/songs/detail/${item.slug}">
+              <div class="inner-image">
+                <img src="${item.avatar}">
+              </div>
+              <div class="inner-info">
+                <div class="inner-title">${item.title}</div>
+                <div class="inner-singer">
+                  <i class="fa-solid fa-microphone-lines"></i> ${item.singerFullName}
+                </div>
+              </div>
+            </a>
+          `);
+          const elementInnerSuggest = boxSearch.querySelector('.inner-suggest')
+          const elementInnerList = elementInnerSuggest.querySelector('.inner-list')
+          //htmlsóngs la 1 array
+        
+          elementInnerList.innerHTML = htmlSong.join("");
+          if (data.songs.length > 0) {
+            elementInnerSuggest.classList.add("show");
+          } else {
+            elementInnerSuggest.classList.remove("show");
+          }
+
+        }
+      })
+  })
+}
+// Hết gợi ý tìm kiếm API

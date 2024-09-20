@@ -19,5 +19,5 @@ route.get('/favorite',
   requireAuth,
   controller.favorite
 )
-route.get('/search',controller.search)
+route.get('/search/:type',controller.search)
 export const songRoute=route

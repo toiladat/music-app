@@ -73,12 +73,13 @@ export const detail = async (req: Request, res: Response) => {
       like: '',
       favorite: ''
     }
+
     // neu co tai khoan
-    if (user) {
+    if (user) {      
       const likedSong = await User.findOne({
         _id: user._id,
-        likedSongList: song._id
-      })
+        likedSongList: song.id
+      })    
       if (likedSong) {
         status['like'] = 'active'
       }
@@ -91,7 +92,7 @@ export const detail = async (req: Request, res: Response) => {
         status['favorite'] = 'active'
       }
     }
- 
+    
     res.render('client/page/songs/detail.pug', {
       pageTitle: "Chi tiết bài hát",
       song: song,
@@ -265,6 +266,11 @@ export const favorite = async (req: Request, res: Response) => {
 }
 //[GET]/songs/search
 export const search = async (req: Request, res: Response) => {
+  // submit form /result ->type=result
+  // api /suggest?keyword='cat '->type=suggest, query -> cat
+  const type=req.params.type
+  
+
   let keyword = `${req.query.keyword}`.trim()
   // replace space global
   let keywordSlug=keyword.replace(/\s/g,"-")
@@ -274,7 +280,10 @@ export const search = async (req: Request, res: Response) => {
   keywordSlug=unidecode(keywordSlug)
 
   
+  // call api phai gui len object mới tạo ( k dùng req.body,..)
+  //nghiêm ngặt hơn để tránh việc trả ra thông tin dư thừa
   const songs = []
+
   const regexSlug=new RegExp(keywordSlug,'i')
   const regex = new RegExp(keyword, 'i')
 
@@ -302,11 +311,25 @@ export const search = async (req: Request, res: Response) => {
     }
     songs.push(song)    
   }
+  if(type=='result'){
+    res.render('client/page/songs/list.pug', {
+      pageTitle: `Bài hát yêu thích`,
+      keyword: keyword,
+      songs: songs
+    })
+  }
+  else if(type=='suggest'){
+    res.json({
+      code:200,
+      songs:songs
+    })
+  }
+  else{
+    res.json({
+      code:400
+    })
+
+  }
 
 
-  res.render('client/page/songs/list.pug', {
-    pageTitle: `Bài hát yêu thích`,
-    keyword: keyword,
-    songs: songs
-  })
 }
