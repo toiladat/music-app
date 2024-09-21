@@ -95,6 +95,7 @@ export const detail = async (req: Request, res: Response) => {
     
     res.render('client/page/songs/detail.pug', {
       pageTitle: "Chi tiết bài hát",
+      
       song: song,
       topic: topic,
       singer: singer,
@@ -333,29 +334,28 @@ export const search = async (req: Request, res: Response) => {
 
 
 }
-//[PATCH]/songs/listen
+  //[PATCH]/songs/listen
 export const listen=async (req:Request,res:Response)=>{
-try{
-  const id=req.body.id
-  const song=await Song.findOne({
-    _id:id
-  })
-  const updateNumber=song.listen+1
-  await Song.updateOne({
-    _id:id
-  },{
-    listen:updateNumber
-  })
-  console.log(id);
-  res.json({
-    code:200,
-    listen:updateNumber
-  })
-  
-}
-catch{
-  res.json({
-    code:400
-  })
-}
+  try{
+    const id=req.body.id
+    const song=await Song.findOne({
+      _id:id
+    })
+    const updateNumber=song.listen+1
+    await Song.updateOne({
+      _id:id
+    },{
+      listen:updateNumber
+    })
+    res.json({
+      code:200,
+      listen:updateNumber
+    })
+    
+  }
+  catch{
+    res.json({
+      code:400
+    })
+  }
 }

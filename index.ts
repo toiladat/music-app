@@ -14,6 +14,8 @@ connectDatabase();
 import flash from "express-flash"
 import cookieParser from "cookie-parser"
 import session from "express-session"
+import { routeAdmin } from "./routes/admin/index.route";
+import { systemConfig } from "./config/system";
 
 
 //flash
@@ -34,9 +36,11 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 app.set('views','./views');
 app.set('view engine','pug')
+// pug dung prefixAdmin
+app.locals.prefixAdmin=systemConfig.prefixAdmin;
 
 routeClient(app);
-
+routeAdmin(app)
 app.listen(port,()=>{
   console.log(`App listening on port ${port}`);
   

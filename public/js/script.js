@@ -1,6 +1,6 @@
 //APlayer
 const aplayer = document.getElementById('aplayer')
-if (aplayer) {
+if (aplayer) { 
   let dataSinger = aplayer.getAttribute('data-singer')
   dataSinger = JSON.parse(dataSinger)
 
@@ -54,9 +54,13 @@ if (aplayer) {
 
   })
 
-
-
   // khi kết thúc tự động next sang bài hát cùng topics
+  // 1 server gửi thêm 1 songList theo chủ đề
+  // 2 nếu chọn phát tuần tự 
+  //     --> dùng array.find rồi tìm ra bài đứng sau đó, rồi window.location đến bài đó
+  //     --> nếu array.find = songList.length thì phát lại từ đầu
+  // 2 nếu chọn phát ngẫu nhiên trong list 
+  //     --> dùng random để phát random những bài trong list
   // app.on('ended',()=>{
   //   window.location=''
   //   fetch()
