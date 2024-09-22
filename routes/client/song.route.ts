@@ -1,6 +1,6 @@
 import express,{ Express } from "express";
 import * as controller from "../../controllers/client/song.controller"
-import {userInfor,requireAuth} from "../../middlewares/auth.middlewares"
+import {userInfor,requireAuth} from "../../middlewares/client/auth.middlewares"
 const route=express.Router()
 
 

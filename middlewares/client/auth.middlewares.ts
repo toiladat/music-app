@@ -1,4 +1,4 @@
-import User from "../models/user.models"
+import User from "../../models/user.models"
 import { Request,Response,NextFunction } from "express"
 export const userInfor = async (req:Request, res:Response, next:NextFunction) => {
   const tokenUser = req.cookies.token

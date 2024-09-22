@@ -1,4 +1,9 @@
  // lib aplayer : dung trong chi tiet bai hat ben client
   https://aplayer.js.org/#/
+
  // pause keyframes
   https://css-tricks.com/how-to-play-and-pause-css-animations-with-css-custom-properties/
+//up anh qua form
+  -- phai them enctype="multipart/form-data"
+  -- ben route phai cai multer
+// library streamifier va cloudinary dung de upload anh len cloud
