@@ -16,6 +16,7 @@ import cookieParser from "cookie-parser"
 import session from "express-session"
 import { routeAdmin } from "./routes/admin/index.route";
 import { systemConfig } from "./config/system";
+import path from "path";
 
 
 //flash
@@ -31,10 +32,19 @@ app.use(session({
 app.use(flash())
 //end flash
 
+
+//tinymce
+app.use('/tinymce',express.static(path.join(__dirname,'node_modules','tinymce')))
+//end tinymce
+
+
+
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 app.use(express.static('public'))
-app.set('views','./views');
+// khi deploy len onl thi phai dung_dir ow view
+//__dirname luôn trả về đường dẫn tuyệt đối.
+app.set('views',`${__dirname}/views`);
 app.set('view engine','pug')
 // pug dung prefixAdmin
 app.locals.prefixAdmin=systemConfig.prefixAdmin;
