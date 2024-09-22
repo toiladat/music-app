@@ -6,9 +6,7 @@ export const topics=async (req:Request,res:Response)=>{
     const topics=await Topic.find({
       deleted:false,
       status:'active'
-    }).select('title avatar slug status')
-    console.log(topics);
-    
+    }).select('title avatar slug status ')    
 
     res.render('admin/page/topics/index',{
       pageTitle:"Quản lý chủ đề",
