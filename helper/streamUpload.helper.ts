@@ -11,7 +11,13 @@ cloudinary.config({
 
 export const streamUpload=(buffer)=>{
   return new Promise((resolve,reject)=>{
+    //upload_stream co 2 param
+    //1. cac file duoc upload
+    //2. ham callback xu ly 
     let stream = cloudinary.uploader.upload_stream(
+      {
+        resource_type:'auto'
+      },
       (error,result)=>{
         if(result)
           resolve(result)
