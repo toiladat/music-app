@@ -5,6 +5,7 @@ import Song from "../../models/songs.model"
 import Singer from "../../models/singer.model"
 import User from "../../models/user.models"
 import FavoriteSong from "../../models/favorite-song.models"
+import moment from 'moment'
 //[GET]/songs/:slugTopic
 export const index = async (req: Request, res: Response) => {
   try {
@@ -53,7 +54,10 @@ export const detail = async (req: Request, res: Response) => {
       status: 'active',
       deleted: false
     })
-
+    //them thoi gian them moi bai hat
+    //moment lib format time, khong co tham so se la tg hien tai
+    // HH -> 24, hh->12
+      song['createdAtFormat']=moment(song.createdAt).format("DD/MM/YYYY")
     // lấy thông tin singer 
     const singer = await Singer.findOne({
       _id: song.singerId,

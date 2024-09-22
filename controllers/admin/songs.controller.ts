@@ -3,6 +3,7 @@ import Song from "../../models/songs.model"
 import Singer from "../../models/singer.model"
 import Topic from "../../models/topics.models"
 import { systemConfig } from "../../config/system"
+import moment from "moment"
 const prefixAdmin=systemConfig.prefixAdmin
 //[GET]/admin/songs
 export const index=async (req:Request,res:Response)=>{
@@ -44,6 +45,7 @@ export const createPost =async(req:Request,res:Response)=>{
   if(req.body['audio']){
     req.body['audio']=req.body['audio'][0]
   }
+  
   const newSong=new Song(req.body)
   await newSong.save();
   res.redirect(`/${prefixAdmin}/songs`)
