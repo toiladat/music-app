@@ -58,6 +58,7 @@ block main
         )
       div(
         class="form-group"
+        upload-audio
       )
         label(for="audio") File âm thanh
         input(
@@ -65,8 +66,11 @@ block main
           class="form-control-file"
           id="audio"
           name="audio"
-          accept="audio/*"
+          upload-audio-input
+          //- accept="audio/*"
         )
+        audio(class="mt-3" controls upload-audio-play)
+          source(src="")
       div(class="form-group")
         label(for="desc") Mô tả
         textarea(
