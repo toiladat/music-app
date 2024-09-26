@@ -7,7 +7,6 @@ block main
       .row
         .col-12
           .inner-title #{song.title}
-
           .inner-actions
             div(class="inner-action inner-time")
               <i class="fa-regular fa-clock"></i> #{song.createdAtFormat}
@@ -32,10 +31,10 @@ block main
 
           .inner-desc
             .inner-label Mô tả
-            .inner-text
+            div(class='inner-text')
               | !{song.description}
 
           .inner-desc
             .inner-label Lời bài hát
-            .inner-text
-              | !{song.lyricsFormat}
+            div(class='inner-text'  lyrics-raw=song.lyrics)
+              //- | !{song.lyricsFormat}
