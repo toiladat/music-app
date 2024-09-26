@@ -1,6 +1,6 @@
 //APlayer
 const aplayer = document.getElementById('aplayer')
-if (aplayer) { 
+if (aplayer) {
   let dataSinger = aplayer.getAttribute('data-singer')
   dataSinger = JSON.parse(dataSinger)
 
@@ -9,11 +9,13 @@ if (aplayer) {
 
   const ap = new APlayer({
     container: aplayer,
+    lrcType: 1,
     audio: [{
       name: dataSong.title,
       artist: dataSinger.fullName,
       url: dataSong.audio,
-      cover: dataSong.avatar
+      cover: dataSong.avatar,
+      lrc: dataSong.lyrics
     }],
     autoplay: true
   });
@@ -33,15 +35,15 @@ if (aplayer) {
       // bên fe thì phải dùng _id
       // set timeout nhưng khi chạy hết bài mới bắt đầu tăng lượt nghe
       ap.on('ended', () => {
-        fetch(`/songs/listen`,{
-          method:'PATCH',
-          headers:{
-            "Content-Type": "application/json"
-          },
-          body:JSON.stringify({
-            id:dataSong._id
+        fetch(`/songs/listen`, {
+            method: 'PATCH',
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              id: dataSong._id
+            })
           })
-        })
           .then(res => res.json())
           .then(data => {
             if (data.code == 200) {
@@ -200,4 +202,3 @@ if (boxSearch) {
   })
 }
 // Hết gợi ý tìm kiếm API
-

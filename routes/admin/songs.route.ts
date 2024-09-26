@@ -6,6 +6,7 @@ const route = express.Router()
 const upload = multer()
 
 route.get('/', controller.index)
+
 route.get('/create', controller.create)
 route.post('/create',
   upload.fields([
@@ -20,4 +21,20 @@ route.post('/create',
   ]),
   uploadToCloud.uploadFields,
   controller.createPost)
+
+route.get('/edit/:id',controller.edit)
+route.patch('/edit/:id',
+  upload.fields([
+    {
+      name: 'avatar',
+      maxCount: 1
+    },
+    {
+      name: 'audio',
+      maxCount: 1
+    }
+  ]),
+  uploadToCloud.uploadFields,
+  controller.editPatch
+  )
 export const songsRoute = route

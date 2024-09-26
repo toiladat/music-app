@@ -54,6 +54,7 @@ export const detail = async (req: Request, res: Response) => {
       status: 'active',
       deleted: false
     })
+    song['lyricsFormat']= song.lyrics.replace(/\[\d{2}:\d{2}\.\d{2}\]/g, '');
     //them thoi gian them moi bai hat
     //moment lib format time, khong co tham so se la tg hien tai
     // HH -> 24, hh->12

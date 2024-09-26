@@ -37,6 +37,13 @@ app.use(flash())
 app.use('/tinymce',express.static(path.join(__dirname,'node_modules','tinymce')))
 //end tinymce
 
+// nhung lib method_override
+// de ghi de phuong thuc trong form
+// mac dinh form la get, sau do la post
+import methodOverride from 'method-override'
+app.use(methodOverride('_method'))
+
+
 
 
 app.use(bodyParser.urlencoded({extended:false}))
