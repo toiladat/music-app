@@ -69,6 +69,53 @@ if (aplayer) {
   // })
 
 
+
+  // Chuẩn hóa lyrics
+  const lyricsRawElement = document.querySelector('[lyrics-raw]');
+  if (lyricsRawElement) {
+    const lyricsRaw = lyricsRawElement.getAttribute('lyrics-raw');
+
+    // Hàm chuyển đổi thời gian mm:ss.ss thành giây
+    function convertTimeToSeconds(time) {
+      const match = time.match(/\[(\d{2}):(\d{2})\.(\d{2})\]/);
+      if (match) {
+        const minutes = parseInt(match[1], 10);
+        const seconds = parseInt(match[2], 10);
+        const milliseconds = parseInt(match[3], 10);
+        return minutes * 60 + seconds + milliseconds / 100;
+      }
+      return 0;
+    }
+
+    // Chuyển đổi chuỗi lời bài hát thành định dạng HTML
+    function convertLyricsToHTML(lyrics) {
+      return lyrics.replace(/\[(\d{2}):(\d{2})\.(\d{2})\] (.+)/g, (match, p1, p2, p3, content) => {
+        const timeInSeconds = convertTimeToSeconds(`[${p1}:${p2}.${p3}]`);
+        return `<div data-time="${timeInSeconds}">${content}</div>`;
+      });
+    }
+
+    // Kết quả
+    const result = convertLyricsToHTML(lyricsRaw);
+    lyricsRawElement.innerHTML = result
+
+
+    // tua bài hát
+    const listLyricsElement = lyricsRawElement.querySelectorAll('[data-time]')
+    if (listLyricsElement) {
+      listLyricsElement.forEach(item => {
+        item.addEventListener('click', () => {
+          const time = item.getAttribute('data-time')
+          ap.seek(parseInt(time));
+        })
+      })
+    }
+
+    //hết tua bài hát
+  }
+  // hết chuẩn hóa lyrics
+
+
 }
 //End APlayer
 
@@ -201,4 +248,4 @@ if (boxSearch) {
       })
   })
 }
-// Hết gợi ý tìm kiếm API
+// Hết gợi ý tìm kiếm 
