@@ -1,0 +1,40 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .singer-detail
+    .container.my-3
+      .row
+        .col-12
+          .inner-title #{song.title}
+          .inner-actions
+            div(class="inner-action inner-time")
+              <i class="fa-regular fa-clock"></i> #{song.createdAtFormat}
+            div(class="inner-action inner-singer")
+              <i class="fa-solid fa-microphone-lines"></i> #{singer.fullName}
+            div(class="inner-action inner-topic")
+              <i class="fa-solid fa-music"></i> #{topic.title}
+            div(class=`inner-action inner-like ${status.like}` button-like=song._id)
+              <i class="fa-regular fa-thumbs-up mr-2"></i> <span>#{song.like}</span> thích
+            div(class="inner-action inner-listen")
+              <i class="fa-solid fa-headphones mr-1"></i> 
+              <span class="inner-number mr-1">#{song.listen}</span>
+              | lượt nghe
+            div(class=`inner-action inner-heart ${status.favorite}` button-favorite=song.id)
+              <i class="fa-regular fa-heart"></i> Bài hát yêu thích
+ 
+          .inner-play
+            .inner-avatar
+              img(src=song.avatar)
+            .inner-audio
+              div(id="aplayer" data-song=song data-singer=singer)
+
+          .inner-desc
+            .inner-label Mô tả
+            div(class='inner-text')
+              | !{song.description}
+
+          .inner-desc
+            .inner-label Lời bài hát
+            div(class='inner-text'  lyrics-raw=song.lyrics)
+              //- | !{song.lyricsFormat}

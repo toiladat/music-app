@@ -1,0 +1,17 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+block main 
+  .container.my-3
+    .row
+      .col-12
+        +box-head("Danh sách chủ đề")
+    .row
+      each topic in topics 
+        .col-6.mb-3 
+          .card
+            img(src=topic.avatar, alt=topic.title)
+            .card-body
+              h5.card-title #{topic.title}
+              p.card-text #{topic.description}
+              a(href=`/songs/topic/${topic.slug}` class="btn btn-primary")
+               |Xem chi tiết 

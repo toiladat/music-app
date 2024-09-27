@@ -1,0 +1,55 @@
+header.header
+  .container
+    .row.align-items-center
+      .col-3
+        .inner-logo
+          a(href="/")
+            img(src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOB9GuEV4-U8rf3gW1UyYYPg3fuC6dacCUvQ&s", alt="Logo")
+      .col-5 
+        .box-search   
+          form(action="/songs/search/result" method='GET')
+            div(class='form-groupt d-flex mb-0')
+              input(
+                type="text"
+                placeholder='Nhập từ khóa...'
+                class='form-control'
+                name='keyword'
+                value=keyword
+              ) 
+              button(
+                type='submit'
+                class='btn btn-primary'
+              ) Tìm
+          .inner-suggest
+            .inner-list
+            //-   a(href=`/songs/detail/:slugSong` class="inner-item")
+            //-     .inner-image
+            //-       img(src="https://backend.daca.vn/assets/images/cat-doi-noi-sau.jpg")
+            //-     .inner-info
+            //-       .inner-title Cắt đôi nỗi sầu
+            //-       .inner-singer
+            //-         <i class="fa-solid fa-microphone-lines"></i> Tăng Duy Tân
+            //-   a(href=`/songs/detail/:slugSong` class="inner-item")
+            //-     .inner-image
+            //-       img(src="https://backend.daca.vn/assets/images/ngay-mai-nguoi-ta-lay-chong.jpg")
+            //-     .inner-info
+            //-       .inner-title Ngày Mai Người Ta Lấy Chồng
+            //-       .inner-singer
+            //-         <i class="fa-solid fa-microphone-lines"></i> Thành Đạt
+      .col-4
+        .inner-menu
+          ul
+            if(user)
+              li #{user.fullName}
+            li
+              a(href="/") Trang chủ
+            li
+              a(href="/topics") Chủ đề
+            if(!user)
+              li
+                a(href="/user/login") Đăng nhập
+            else 
+              li
+                a(href='/songs/favorite') Bài hát yêu thích
+              li 
+                a(href='/user/logout') Đăng xuất

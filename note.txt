@@ -7,3 +7,13 @@
   -- phai them enctype="multipart/form-data"
   -- ben route phai cai multer
 // library streamifier va cloudinary dung de upload anh len cloud
+
+
+// tsc chi push cac folder chua file.ts vao folder dist do do trong dist se bi thieu code
+// de folder public va views vao folder dist
+// lib fs-extra se lam dieu do
+  npm run build de thuc thi ca 2 lenh
+  tsc : render ra dist va convert js
+  node coppy-dir.js: push cac file con lai vao dist
+    "build": "tsc&&node coppy-dir.js",
+    mac dinh start thi k can npm run start 
